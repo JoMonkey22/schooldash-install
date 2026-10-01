@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Install Silly Bus AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap">
+<style>
+  :root {
+    --surface: #F5F7FB; --card: #FFFFFF; --line: #DFE4EE;
+    --ink: #14192B; --muted: #5F6980;
+    --brand: #2563EB; --brand-deep: #1D4ED8; --brand-soft: #E8EFFE; --on-brand: #FFFFFF;
+    --ok: #106B4E; --ok-soft: #DDF3EB;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #0D1220; --card: #161C2C; --line: #26304A;
+      --ink: #E6EAF4; --muted: #939CB4;
+      --brand: #7FA8FF; --brand-deep: #A3C2FF; --brand-soft: #17233E; --on-brand: #0E1424;
+      --ok: #63C7A3; --ok-soft: #123028;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--surface); color: var(--ink);
+    font-family: Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  main { max-width: 640px; margin: 0 auto; padding: 56px 20px 80px; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; }
+  .brand-mark { width: 34px; height: 34px; border-radius: 9px; display: block; }
+  .brand-name { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; font-size: 18px; }
+  h1 {
+    font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800;
+    font-size: clamp(28px, 5vw, 38px); line-height: 1.15; margin: 0 0 14px;
+  }
+  .lede { color: var(--muted); font-size: 17px; line-height: 1.55; margin: 0 0 32px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 28px; margin-bottom: 24px;
+    box-shadow: 0 1px 2px rgb(20 25 43 / .05), 0 6px 16px -6px rgb(20 25 43 / .10);
+  }
+  .download-btn {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--brand); color: var(--on-brand); text-decoration: none;
+    font-weight: 700; font-size: 16px; border-radius: 12px; padding: 16px 20px;
+    transition: background 120ms ease;
+  }
+  .download-btn:hover { background: var(--brand-deep); }
+  .meta-row {
+    display: flex; justify-content: space-between; color: var(--muted);
+    font-size: 13px; margin-top: 12px;
+  }
+  h2 {
+    font-family: "Plus Jakarta Sans", sans-serif; font-size: 15px;
+    text-transform: uppercase; letter-spacing: .04em; color: var(--muted);
+    margin: 0 0 16px;
+  }
+  ol { margin: 0; padding-left: 22px; line-height: 1.7; }
+  ol li { margin-bottom: 10px; }
+  ol li:last-child { margin-bottom: 0; }
+  .callout {
+    background: var(--brand-soft); border-radius: 10px; padding: 12px 14px;
+    font-size: 14px; line-height: 1.5; margin-top: 16px;
+  }
+  .privacy {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--ok-soft); border-radius: 10px; padding: 14px 16px;
+    font-size: 14px; line-height: 1.5; color: var(--ink);
+  }
+  .privacy strong { color: var(--ok); }
+  footer { color: var(--muted); font-size: 13px; text-align: center; margin-top: 40px; }
+  code {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+    padding: 2px 6px; font-size: 13px;
+  }
+
+.lead-in { margin: 0 0 14px; color: var(--muted); }
+kbd {
+  font: 600 12px ui-monospace, monospace; background: var(--brand-soft);
+  border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px;
+  color: var(--ink);
+}
+.cmd-row {
+  display: flex; align-items: stretch; gap: 8px; margin: 0 0 14px;
+}
+.cmd-row code {
+  /* Wrap rather than scroll. A horizontally clipped command reads as broken
+     even though the Copy button gets the whole thing, and people paste what
+     they can see. */
+  flex: 1; min-width: 0; white-space: pre-wrap; word-break: break-all;
+  line-height: 1.5;
+  background: var(--brand-soft); border: 1px solid var(--line);
+  border-radius: 9px; padding: 13px 14px;
+  font: 13px ui-monospace, SFMono-Regular, monospace; color: var(--ink);
+}
+.cmd-row button {
+  flex: none; border: 0; border-radius: 9px; padding: 0 20px; cursor: pointer;
+  background: var(--brand); color: var(--on-brand);
+  font: 600 14px Inter, system-ui, sans-serif;
+}
+.cmd-row button:hover { background: var(--brand-deep); }
+.cmd-row button.copied { background: var(--ok); }
+.after { margin: 0 0 18px; }
+.fallback {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 18px 22px; margin-bottom: 22px;
+}
+.fallback summary {
+  cursor: pointer; font-weight: 600; color: var(--muted);
+}
+.fallback p { color: var(--muted); font-size: 14px; }
+.fallback p:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+<style>
+  /* The extension is genuinely optional, and the page has to say so without
+     burying it: a badge on the heading, and a download button that reads as a
+     sibling of the install command rather than a competing call to action. */
+  .opt {
+    font-size: .62em; font-weight: 600; letter-spacing: .06em;
+    text-transform: uppercase; vertical-align: middle; margin-left: 8px;
+    padding: 2px 7px; border-radius: 999px;
+    background: rgba(37, 99, 235, .12); color: #2563EB;
+  }
+  a.dl {
+    display: inline-block; padding: 9px 16px; border-radius: 10px;
+    background: #2563EB; color: #fff; text-decoration: none; font-weight: 600;
+  }
+  a.dl:hover { filter: brightness(1.08); }
+  ol.steps { margin: 14px 0 0; padding-left: 22px; line-height: 1.6; }
+  ol.steps li + li { margin-top: 6px; }
+  .callout.good {
+    border-left: 3px solid #16A34A;
+    background: rgba(22, 163, 74, .07);
+  }
+  details.manual > summary {
+    cursor: pointer; font-weight: 600; padding: 8px 0; color: #2563EB;
+  }
+  ol.steps code {
+    background: rgba(0, 0, 0, .06); padding: 1px 5px; border-radius: 5px;
+    font-size: .92em;
+  }
+</style>
+<main>
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 512 512" role="img" aria-label="Silly Bus AI">
+      <rect width="512" height="512" rx="112" fill="#0F2350"/>
+      <path d="M 165 314 L 171 390 C 171 425, 341 425, 341 390 L 347 314 Z" fill="#FFFFFF"/>
+      <path d="M 260 199 L 405 273 L 260 351 L 113 273 Z" fill="#FFFFFF"
+            stroke="#FFFFFF" stroke-width="9" stroke-linejoin="round"/>
+      <path d="M 388 106 Q 388 172 452 172 Q 388 172 388 238 Q 388 172 324 172 Q 388 172 388 106 Z"
+            fill="#FFFFFF"/>
+    </svg>
+    <div class="brand-name">Silly Bus AI</div>
+  </div>
+
+  <h1>Everything you have to do, in one place.</h1>
+  <p class="lede">
+    Canvas assignments and the homework your teachers type into their course
+    docs, ranked by what's due soonest. Runs entirely on your own Mac —
+    nothing is uploaded anywhere.
+  </p>
+
+  <div class="card">
+    <h2>Install it</h2>
+    <p class="lead-in">Open <strong>Terminal</strong> (press <kbd>⌘</kbd><kbd>Space</kbd>,
+      type <em>terminal</em>, press Return), paste this line, and press Return.</p>
+
+    <div class="cmd-row">
+      <code id="cmd">curl -fsSL https://jomonkey22.github.io/schooldash-install/install.sh | bash</code>
+      <button id="copy" type="button">Copy</button>
+    </div>
+
+    <p class="after">That's the whole install. It downloads Silly Bus AI, puts it in
+      your Applications folder, adds it to your Dock, and opens it — about a
+      minute, and it never asks for your password.</p>
+
+    <div class="callout">
+      <strong>Why a command and not a download button?</strong> macOS blocks
+      apps downloaded through a browser unless the developer pays Apple $99 a
+      year — you'd get <em>“Apple could not verify Silly Bus AI is free of
+      malware”</em> and have to dig through System Settings to override it.
+      Files fetched this way aren't flagged, so Silly Bus AI just opens. Same
+      app, no warning.
+      <br><br>
+      Want to read the script before running it? It's plain text at
+      <a href="./install.sh">jomonkey22.github.io/schooldash-install/install.sh</a> —
+      opening that link shows it rather than downloading it.
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>What happens next</h2>
+    <ol>
+      <li>Silly Bus AI downloads what it needs — a few minutes, with a
+        notification when it is done — then opens its window on the
+        <strong>Setup</strong> screen.</li>
+      <li>Save your school Google sign-in there and press
+        <strong>Connect</strong>. Silly Bus AI signs in to Canvas and Veracross
+        for <strong>your own</strong> account — now, and whenever a session
+        runs out later. If Google asks for a phone tap, a window opens for
+        that one step.</li>
+      <li>Check your classes: textbook, syllabus, the teacher's homework doc.
+        Then the first pull, and you're done.</li>
+      <li>After that, open it from the Dock whenever you like. It refreshes
+        itself every half hour; <strong>Refresh</strong> pulls the latest.</li>
+    </ol>
+  </div>
+
+  <div class="card" id="chrome">
+    <h2>Add the Chrome extension <span class="opt">optional</span></h2>
+    <p class="lead-in">Silly Bus AI signs in to Canvas and Veracross by itself,
+      in a browser of its own. That works — but a school Google account is
+      awkward to sign in to automatically, and a Veracross session expires
+      about every half hour.</p>
+    <p class="lead-in">Install this and the Chrome <em>you</em> are already
+      signed in to hands those pages over instead. No sign-in, no session to
+      keep alive, nothing typed.</p>
+
+    <div class="callout good">
+      <strong>Install Silly Bus AI first and you do not need to download
+      anything here.</strong> The extension ships inside the app. Open
+      Silly Bus AI → <strong>Settings</strong> → <strong>Connect Chrome</strong>
+      and it walks you through it in three steps, with a button that opens the
+      right folder in Finder for you.
+    </div>
+
+    <details class="manual">
+      <summary>Rather do it by hand? (or haven't installed the app yet)</summary>
+      <div class="cmd-row" style="margin-top:12px">
+        <a class="dl" href="./sillybus-chrome.zip" download>Download the extension</a>
+        <span class="after" style="margin:0">a small .zip — under 20 KB</span>
+      </div>
+      <ol class="steps">
+        <li>Unzip it. You get a folder called <strong>sillybus-chrome</strong>
+          — keep it somewhere you won't delete, like Documents. Chrome
+          remembers where you loaded it from, so moving or binning that folder
+          stops the extension working.</li>
+        <li>In Chrome, open <code>chrome://extensions</code> — paste that into
+          the address bar, a link can't open it — and turn on
+          <strong>Developer mode</strong> (top right).</li>
+        <li>Click <strong>Load unpacked</strong> and pick that folder.</li>
+        <li>In Silly Bus AI, open <strong>Settings → Connect Chrome</strong> and
+          press <strong>Create a pairing code</strong>. Copy it.</li>
+        <li>Click the Silly Bus AI icon in Chrome's toolbar, paste the code, and
+          press <strong>Pair this browser</strong>.</li>
+      </ol>
+    </details>
+
+    <div class="callout">
+      <strong>Why isn't it in the Chrome Web Store?</strong> Publishing there
+      needs a developer account and a review that takes days. Loading it
+      yourself works exactly the same. Chrome shows a small "Developer mode
+      extensions" note when it starts — that's expected, and you can dismiss
+      it.
+      <br><br>
+      <strong>What it can see.</strong> Only Canvas, Veracross and
+      <code>127.0.0.1</code> — the five addresses are listed in its
+      <code>manifest.json</code>, which you can read before installing. It
+      fetches the pages Silly Bus AI asks for, using the sign-in already in your
+      browser, and posts them to Silly Bus AI on your own Mac. It never sees a
+      password, there is no account, and nothing goes to anyone else.
+      Silly Bus AI keeps working exactly as before without it.
+    </div>
+  </div>
+
+  <details class="fallback">
+    <summary>Would rather not use Terminal?</summary>
+    <p>There's a disk image: <a href="./SillyBusAI-Installer.dmg" download>SillyBusAI-Installer.dmg</a>.
+      Drag <strong>Silly Bus AI.app</strong> out of it onto your Desktop, then
+      double-click it.</p>
+    <p>macOS <em>will</em> refuse it the first time — “Apple could not verify
+      Silly Bus AI is free of malware”. Click <strong>Done</strong>, then open
+      <strong>System Settings → Privacy &amp; Security</strong>, scroll to
+      <strong>Security</strong>, and click <strong>Open Anyway</strong> next to
+      the line about Silly Bus AI. Once only.</p>
+    <p>The one-line install above exists precisely so you don't have to do
+      any of that.</p>
+  </details>
+
+  <div class="privacy">
+    <span>🔒</span>
+    <span><strong>Nothing shared.</strong> This download contains no one's
+      login, password, or homework — you sign into your own Canvas and
+      Veracross during setup, and everything stays on your Mac.</span>
+  </div>
+
+  <footer>Shows your grades too, read from Veracross — and never uploaded anywhere.</footer>
+</main>
+<script>
+  // Selecting a long command by hand in a browser reliably picks up a
+  // trailing newline or misses the tail of the line; a button does not.
+  document.getElementById("copy").addEventListener("click", function () {
+    var button = this;
+    navigator.clipboard.writeText(document.getElementById("cmd").textContent.trim())
+      .then(function () {
+        button.textContent = "Copied";
+        button.classList.add("copied");
+        setTimeout(function () {
+          button.textContent = "Copy";
+          button.classList.remove("copied");
+        }, 1800);
+      })
+      .catch(function () {
+        // Clipboard access gets refused often enough to need a real answer:
+        // an insecure origin, a browser that demands a fresher user gesture,
+        // a locked-down school profile. Telling someone to "select it" and
+        // leaving them to drag across a wrapped command is how the wrong
+        // half of a URL ends up pasted into a terminal — so select it for
+        // them and let ⌘C do the rest.
+        var range = document.createRange();
+        range.selectNodeContents(document.getElementById("cmd"));
+        var selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        button.textContent = "Press ⌘C";
+        setTimeout(function () { button.textContent = "Copy"; }, 4000);
+      });
+  });
+</script>
+</body>
+</html>
